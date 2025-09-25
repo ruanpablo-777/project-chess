@@ -28,6 +28,7 @@ body {
   background-color: var(--primary-color);
   width: var(--sizeBox);
   height: var(--sizeBox);
+  color:  white;
 }
 
 .box-white {
