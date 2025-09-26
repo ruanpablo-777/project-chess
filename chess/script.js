@@ -4,12 +4,12 @@
 //4 = cavalo
 //5 = rainha
 //6 = rei
-let peao0 = document.getElementById('peao0')
 let peao = document.querySelectorAll(".peao");
-let box = document.querySelectorAll("#box");
-let movimento = [];
-let firstMoviment = true;
-let atributosPeao = [];
+let box = document.querySelectorAll(".box");
+let positionTabuleiro;
+let clicks = [];
+let pecasId = [];
+let allowTwoPass = true
 let tabuleiro = [
   [2, 2, 2, 2, 2, 2, 2, 2],
   [2, 2, 2, 2, 2, 2, 2, 2],
@@ -20,76 +20,63 @@ let tabuleiro = [
   [1, 1, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1, 1],
 ];
-
-console.log(tabuleiro.length)
+ 
 box.forEach((element, index) => {
-  element.id = index;
-  // element.innerHTML = index
-  let l = 0;
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
-      l++;
-      tabuleiro[i][j] = l;
-    }
-  }
-  //console.log(tabuleiro);
   element.addEventListener("click", () => {
-    if (atributosPeao[1] && movimento == "") {
-      movimento.push(index - 8, index - 16);
-      firstMoviment = false;
-      console.log(movimento);
+
+    let hasPeao = !pecasId[0];
+    let positionNow = clicks[0];
+    let positionChoosed = parseFloat(positionNow - 2.0).toFixed(1);
+    let verifyPositionChoosed = positionChoosed == parseFloat(clicks[clicks.length - 1]).toFixed (1); // verify your last click last box choosed :)
+
+    console.log(clicks);
+    console.log(hasPeao)
+    clicks.push(element.id);
+    console.log(verifyPositionChoosed)
+
+    if (allowTwoPass && verifyPositionChoosed) {
+      movePeaoTwoPass(positionChoosed, verifyPositionChoosed);
     } else {
-      movimento.push(index - 8);
-      console.log(movimento);
+      let positionChoosed = parseFloat(positionNow - 1.0).toFixed(1);
+      let verifyPositionChoosed = positionChoosed == parseFloat(clicks[clicks.length - 1]).toFixed(1);
+      movePeaoOnePass(positionChoosed, verifyPositionChoosed)
+      
     }
   });
 });
 
 peao.forEach((element, index) => {
-  element.innerHTML = "♟️";
-
-  atributosPeao.push({ id: index, nome: "peao", firstJogada: true });
   element.addEventListener("click", () => {
-    let pecas = "";
-    pecas = element.id;
-    if (pecas == `peao${index}`) {
-      peao1(pecas);
-    }
-});
+    pecasId[0] = (element.id);
+    clicks = []
+  
+    // atributosPeao.push({ id: index, nome: "peao", firstJogada: true });
+    //console.log(element.id)
+  });
 });
 
-function peao1(pecas) {
-  box.forEach((element, index) => {
-      element.addEventListener("click", () => {
-          for (let i = 0; i < movimento.length; i++) {
-        if (!element.hasChildNodes() && movimento[i] == index) {
-          let peao = document.getElementById(`${pecas}`);
-          let createPeao = document.createElement("div");
-
-          // createPeao.classList.add('peao')
-          createPeao.id = `${pecas}`;
-          createPeao.textContent = "peao";
-          element.appendChild(peao);
-          pecas = "";
-          movimento = [];
-        }
-    }
-});
-});
+function movePeaoTwoPass(positionChoosed, verifyPositionChoosed) {
+  if (verifyPositionChoosed) {
+    let getPeao = document.getElementById(`${pecasId[0]}`);
+    let boxPosition = document.getElementById(`${positionChoosed}`);
+    boxPosition.appendChild(getPeao);
+    clicks = [];
+    pecasId = [];
+    allowTwoPass = false  
+  }
 }
 
+function movePeaoOnePass(positionChoosed, verifyPositionChoosed) {
+    if (verifyPositionChoosed) {
+    let getPeao = document.getElementById(`${pecasId[0]}`);
+    let boxPosition = document.getElementById(`${positionChoosed}`);
+    boxPosition.appendChild(getPeao);
+    clicks = [];
+    pecasId = [];
+        allowTwoPass = false  
 
-/*
-peao0.addEventListener('dblclick', () => {
-document.addEventListener('mousemove', (e) => {
-    let x = e.clientX
-    let y = e.clientY
-    console.log(x, ' ', y)
-        peao0.style.transform = `translate(${x - 120}px, ${y - 370}px)`
-        peao0.style.zIndex = 2
-      //  peao0.style.position = 'relative'
-            console.log(peao0.style.transform)
+  }
+}
 
-
-    })
-})*/
+//change the box to tabuleiro.js and usar o atributo para o peao
+    // atributosPeao.push({ id: index, nome: "peao", firstJogada: true });

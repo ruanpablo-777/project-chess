@@ -31,13 +31,11 @@ body {
   color:  white;
 }
 
-.box-white {
+.box {
   background-color: var(--secondary-color);
   width: var(--sizeBox);
   height: var(--sizeBox);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+ 
 }
 
 .peao {
@@ -47,6 +45,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: 2s linear infinite ;
 }
 .peao-black {
   color: blue;
@@ -55,4 +54,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+p {
+  font-size: 10px;
+  width: 10px;
+  height: 10px;
+
+  
 }
