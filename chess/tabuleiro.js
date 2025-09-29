@@ -7,11 +7,7 @@ list.forEach((element, index) => {
     box.classList.add("box");
     positionMatriz.classList.add("position-Matriz");
     box.appendChild(positionMatriz);
-    const ola = document.querySelectorAll('.box')
-    function hello() {
-
-    }
-    
+ 
     if (index == 6) {
       box.appendChild(pecass);
       pecass.id = 'peao'+i
@@ -50,8 +46,3 @@ list.forEach((element, index) => {
     
   }
 });
-function hello() {
-
-}
-
-const blabla = 3
